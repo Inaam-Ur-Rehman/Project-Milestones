@@ -7,7 +7,7 @@ import asyncHandler from "express-async-handler";
 // @access	Public
 
 export const registerEmployeeCtrl = asyncHandler(async (req, res) => {
-  const { fullname, email, password } = req.body;
+  /* const { fullname, email, password } = req.body;
   //Check User Exist
   const userExist = await Employee.findOne({ email });
 
@@ -25,10 +25,10 @@ export const registerEmployeeCtrl = asyncHandler(async (req, res) => {
     fullname,
     email,
     password: hashedPassword,
-  });
-  res.status(201).json({
+  }); */
+  res.json({
     status: "Success",
     message: "User Registerd Successful",
-    data: user,
+    /* data: user, */
   });
 });

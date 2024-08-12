@@ -4,7 +4,15 @@ import Logo from "./Logo.jpg";
 
 const PrivateNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navItems = ["Home", "Inventry","Invoice", "About", "Services", "Contact"];
+  const navItems = [
+    "Home",
+    "Inventry",
+    "Purchase",
+    "Invoice",
+    "About",
+    "Services",
+    "Contact",
+  ];
 
   return (
     <nav className="bg-gray-800 p-4">

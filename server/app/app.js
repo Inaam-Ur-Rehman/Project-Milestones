@@ -12,6 +12,6 @@ const app = express();
 app.use(express.json());
 
 //Routes
-app.use("/api/v1/employees", Employee);
+app.use("/", Employee);
 
 export default app;
