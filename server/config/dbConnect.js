@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 const dbConnect = async () => {
   try {
-    mongoose.set("strictQuery", true);
+    mongoose.set("strictQuery", false);
     const connected = await mongoose.connect(process.env.MONGO_URL);
     console.log(`Mongodb connected ${connected.connection.host}`);
   } catch (error) {
