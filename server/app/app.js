@@ -7,11 +7,19 @@ import {
   globalErrorHandler,
   notFound,
 } from "../Middleware/globalErrorHandler.js";
+import cors from "cors";
 
 // dbConnect
 dbConnect();
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:5173/",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+  })
+);
 // Pass incoming Data
 app.use(express.json());
 
