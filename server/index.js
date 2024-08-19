@@ -11,7 +11,16 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 3001;
 
 // const app = express();
+// //! Cors config
+app.use(
+  cors({
+    origin: "http://localhost:5173/",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+  })
+);
 
+// app.use(cors(corsOptions));
 app.use(express.json());
 
 mongoose
@@ -21,14 +30,7 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
-// //! Cors config
-// const corsOptions = {
-//   origin: "http://localhost:5173",
-// };
-
-// app.use(cors(corsOptions));
-
-app.use(cors());
+// app.use(cors());
 
 app.post("/register", (req, res) => {
   Employee.create(req.body)
