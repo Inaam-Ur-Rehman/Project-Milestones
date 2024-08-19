@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "tailwindcss/tailwind.css";
 import AdminNavbar from "./AdminNavbar";
 import { Link } from "react-router-dom";
 

@@ -5,6 +5,7 @@ const Items = [
     quantity: 2,
     price: 50,
     total: 100,
+    img: "https://picsum.photos/200/300",
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ const Items = [
     quantity: 1,
     price: 100,
     total: 100,
+    img: "https://picsum.photos/200/300",
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ const Items = [
     quantity: 3,
     price: 75,
     total: 225,
+    img: "https://picsum.photos/200/300",
   }
 ];
 

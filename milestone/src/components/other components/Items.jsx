@@ -1,7 +1,7 @@
 import React from "react";
 import ItemsList from "./ItemsList";
 
-function Items({ item, quantity, price, total }) {
+function Items({ item, quantity, price, img, total }) {
   return (
     <div>
       <table className="w-full">
@@ -11,15 +11,19 @@ function Items({ item, quantity, price, total }) {
             <th className="text-md font-bold">Quantity</th>
             <th className="text-md font-bold">Price</th>
             <th className="text-md font-bold">Total</th>
+            <th className="text-md font-bold">image</th>
           </tr>
         </thead>
         <tbody>
           {ItemsList.map((item) => (
             <tr key={item.id}>
-              <td className="text-sm">{item.item}</td>
-              <td className="text-sm">{item.quantity}</td>
-              <td className="text-sm">{item.price}</td>
-              <td className="text-sm">{item.total}</td>
+              <td className="text-sm ">{item.item}</td>
+              <td className="text-sm text-center">{item.quantity}</td>
+              <td className="text-sm text-center">{item.price}</td>
+              <td className="text-sm text-center">{item.total}</td>
+              <td className="text-sm text-center">
+                <img className="w-10 h-10" src={item.img} alt="" />
+              </td>
             </tr>
           ))}
         </tbody>

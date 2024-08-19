@@ -17,15 +17,15 @@ const employeeSchema = new Schema(
       type: String,
       required: true,
     },
-    userType:{
-      type:String,
-      default:"User",
-      enum:[
-        "Admin",
-        "Employee",
-        "User"
-      ]
-    }
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    userType: {
+      type: String,
+      default: "User",
+      enum: ["Admin", "Employee", "User"],
+    },
   },
   {
     timestamps: true,

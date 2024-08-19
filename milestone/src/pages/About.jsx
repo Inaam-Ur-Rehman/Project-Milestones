@@ -1,18 +1,17 @@
 import React from "react";
-import PublicNavbar from "../components/PublicNavbar";
 import Cards from "../components/Admin/Cards";
 
-const AboutPage = (props) => {
+const AboutPage = () => {
   return (
     <>
       <div className="flex flex-col bg-gray-100">
         {/* Hero Section */}
         <div
-          className="h-screen bg-cover bg-center"
+          className=" bg-cover bg-center"
           style={{ backgroundImage: "url(https://picsum.photos/2000/1000)" }}
         >
           <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12 xl:p-24">
-            <h1 className="text-3xl font-bold text-white md:text-5xl lg:text-7xl xl:text-9xl">
+            <h1 className="text-2xl font-bold text-white md:text-4xl lg:text-6xl xl:text-8xl">
               About Us
             </h1>
           </div>

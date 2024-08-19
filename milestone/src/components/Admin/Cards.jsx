@@ -2,8 +2,8 @@ import React from "react";
 
 function Cards(props) {
   return (
-    <div>
-      <div className="bg-white shadow-md p-4">
+    <div >
+      <div className=" bg-white shadow-md p-4">
         <img
           src={props.image}
           alt="Team Member"
