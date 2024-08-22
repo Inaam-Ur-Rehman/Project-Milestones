@@ -4,6 +4,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import { loginAPI } from "../services/users/userServices";
+import AlertMessage from "../../Templates/Alert/AlertMessage";
+import { loginAction } from "../redux/slice/authSlice";
+import { useDispatch } from "react-redux";
 
 //! Validation
 const validationSchema = Yup.object({
@@ -20,11 +23,16 @@ const SignInForm = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  // Dispatch
+  const dispatch = useDispatch();
+
   //! Mutation
   const { mutateAsync, isPending, isError, error, isSuccess } = useMutation({
     mutationFn: loginAPI,
     mutationKey: ["login"],
   });
+
+  // console.log(mutateAsync.AlertMessage);
 
   // console.log(mutation);
 
@@ -39,11 +47,16 @@ const SignInForm = () => {
       console.log(values);
       // http request
       mutateAsync(values)
-        .then((data) => console.log(data))
+        .then((data) => {
+          console.log(data);
+          dispatch(loginAction(data));
+          localStorage.setItem("authToken", data.token);
+        })
         .catch((err) => console.log(err));
     },
   });
 
+  // console.log(isError.message);
   // console.log(formik);
 
   return (
@@ -54,6 +67,18 @@ const SignInForm = () => {
             onSubmit={formik.handleSubmit}
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           >
+            {/* Display Message */}
+            {isPending && (
+              <AlertMessage type="loading" message="Login you in..." />
+            )}
+            {isError && (
+              <AlertMessage type="isError" message={isError.message} />
+            )}
+            {error && <AlertMessage type="error" message={error} />}
+
+            {isSuccess && (
+              <AlertMessage type="success" message="Login Success" />
+            )}
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -63,6 +88,7 @@ const SignInForm = () => {
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                autoComplete="on"
                 id="username"
                 type="text"
                 placeholder="Email"

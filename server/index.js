@@ -1,26 +1,32 @@
 import express from "express";
 import mongoose from "mongoose";
-import Employee from "./models/Employee.js";
-import http from "http";
-import app from "./app/app.js";
 import cors from "cors";
+import employeeRoute from "./Router/employeeRoute.js";
+import dotenv from "dotenv";
+dotenv.config();
 
-// Create the server
-
-const server = http.createServer(app, (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-});
+const app = express();
 const PORT = process.env.PORT || 3001;
 
-// const app = express();
-// //! Cors config
+// Configure CORS
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
+app.use(cors(corsOptions));
 
-// app.use(cors(corsOptions));
 app.use(express.json());
 
+app.use("/", employeeRoute);
+
+app.get("/", (req, res) => {
+  res.send("CORS is working!");
+});
+
+// Connect to MongoDB
 mongoose
   .connect(
     "mongodb+srv://mydata:Lh27AfZvJb0yaryv@milestone.fnfk0px.mongodb.net/employee"
@@ -28,12 +34,6 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
-// app.use(cors());
-
-app.post("/register", (req, res) => {
-  Employee.create(req.body)
-    .then((employees) => res.json(employees))
-    .catch((err) => res.json(err));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

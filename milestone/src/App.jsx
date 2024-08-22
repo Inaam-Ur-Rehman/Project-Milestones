@@ -4,19 +4,22 @@ import HomePage from "./pages/Homepage";
 import InvoicePage from "./pages/InvoicePage";
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import AboutPage from "./pages/About";
-import PublicNavbar from "./components/PublicNavbar";
+import PublicNavbar from "../Templates/Navbar/PublicNavbar";
 import Footer from "./components/Admin/Footer";
 import SignInForm from "./pages/SignInForm";
-import PrivateNavbar from "./components/PrivateNavbar";
+import PrivateNavbar from "../Templates/Navbar/PrivateNavbar";
 import CreateInventory from "./pages/CreateInventry";
 import Homepage from "../Templates/Home/Homepage";
+import { getUserFromStorage } from "./utils/getUserFromStorage";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  // const { isAuthenticated } = useAuth();
+  const user = useSelector((state) => state?.auth?.user);
+
   return (
     <BrowserRouter>
       {/* <PublicNavbar /> */}
-
+      {user ? <PrivateNavbar /> : <PublicNavbar />}
       <Routes>
         <Route path="/register" element={<SignupForm />} />
         <Route path="/login" element={<SignInForm />} />

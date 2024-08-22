@@ -31,7 +31,7 @@ export const registerEmployeeCtrl = asyncHandler(async (req, res) => {
     email,
     password: hashedPassword,
   });
-  res.json({
+  res.status(201).json({
     status: "Success",
     message: "User Registerd Successful",
     data: user,
@@ -65,7 +65,10 @@ export const loginUserCtrl = asyncHandler(async (req, res) => {
       token: generateToken(userFound?._id),
     });
   } else {
-    throw new Error("Invalid login Credentials");
+    res.status(401).json({
+      status: "Failed",
+      message: "Invalid login details",
+    });
   }
 });
 

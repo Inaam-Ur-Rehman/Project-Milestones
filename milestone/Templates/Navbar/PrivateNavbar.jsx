@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo.jpg";
+import { logoutAction } from "../../src/redux/slice/authSlice";
+import { useDispatch } from "react-redux";
 
 const PrivateNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,6 +15,16 @@ const PrivateNavbar = () => {
     "Services",
     "Contact",
   ];
+
+  // Dispatch
+  const dispatch = useDispatch();
+
+  //! Logout Handler
+  const logoutHandler = () => {
+    dispatch(logoutAction());
+    // Remove the token from local storage
+    localStorage.removeItem("authToken");
+  };
 
   return (
     <nav className="bg-gray-800 p-4">
@@ -64,6 +76,13 @@ const PrivateNavbar = () => {
               {item}
             </Link>
           ))}
+          <button
+            type="button"
+            className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded-full"
+            onClick={logoutHandler}
+          >
+            Logout
+          </button>
           <Link
             to="/login"
             className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded-full"
@@ -78,19 +97,28 @@ const PrivateNavbar = () => {
             <Link
               key={index}
               to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-              className="block text-white hover:text-gray-400 mt-2"
+              className="flex items-center justify-center text-white mb-4 hover:text-gray-400"
               onClick={() => setIsMenuOpen(false)}
             >
               {item}
             </Link>
           ))}
-          <Link
-            to="/login"
-            className="block text-white bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded mt-2"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Profile
-          </Link>
+          <div className="flex flex-row justify-between">
+            <button
+              type="button"
+              className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded-full"
+              onClick={logoutHandler}
+            >
+              Logout
+            </button>
+            <Link
+              to="/profile"
+              className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded-full"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Profile
+            </Link>
+          </div>
         </div>
       )}
     </nav>

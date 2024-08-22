@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
+import { registerAPI } from "../services/users/userServices";
+import AlertMessage from "../../Templates/Alert/AlertMessage";
 
 //! Validation
 const validationSchema = Yup.object({
@@ -42,21 +44,26 @@ const SignupForm = () => {
   }; */
 
   //! Mutation
-  useMutation;
+  const { mutateAsync, isPending, isError, error, isSuccess } = useMutation({
+    mutationFn: registerAPI,
+    mutationKey: ["register"],
+  });
 
   const formik = useFormik({
     initialValues: {
-      userName: "",
+      username: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
 
     //! Validation
     validationSchema,
     onSubmit: (values) => {
       console.log(values);
-      alert(JSON.stringify(values, null, 2));
+      // http request
+      mutateAsync(values)
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
     },
   });
 
@@ -69,6 +76,21 @@ const SignupForm = () => {
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           >
             <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+
+            {/* Display Message */}
+            {isPending && (
+              <AlertMessage type="loading" message="Creating Account..." />
+            )}
+            {isError && (
+              <AlertMessage
+                type="isError"
+                message={error.response.data.message}
+              />
+            )}
+            {isSuccess && (
+              <AlertMessage type="success" message="Account Created" />
+            )}
+
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -84,8 +106,8 @@ const SignupForm = () => {
                 onChange={(e) => setUserName(e.target.value)}
                 {...formik.getFieldProps("userName")}
               />
-              {formik.touched.userName && formik.errors.userName ? (
-                <div className="text-red-500">{formik.errors.userName}</div>
+              {formik.touched.username && formik.errors.username ? (
+                <div className="text-red-500">{formik.errors.username}</div>
               ) : null}
             </div>
             <div className="mb-4">
@@ -97,10 +119,11 @@ const SignupForm = () => {
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                autoComplete="on"
                 id="email"
                 type="email"
                 placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
+                // onChange={(e) => setEmail(e.target.value)}
                 {...formik.getFieldProps("email")}
               />
               {formik.touched.email && formik.errors.email ? (
@@ -120,7 +143,7 @@ const SignupForm = () => {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="******************"
-                  onChange={(e) => setPassword(e.target.value)}
+                  // onChange={(e) => setPassword(e.target.value)}
                   {...formik.getFieldProps("password")}
                 />
                 {formik.touched.password && formik.errors.password ? (
@@ -148,7 +171,7 @@ const SignupForm = () => {
                   id="confirmPassword"
                   type={showPassword ? "text" : "password"}
                   placeholder="******************"
-                  onChange={(e) => setPassword(e.target.value)}
+                  // onChange={(e) => setPassword(e.target.value)}
                   {...formik.getFieldProps("confirmPassword")}
                 />
                 {formik.touched.confirmPassword &&
@@ -171,7 +194,6 @@ const SignupForm = () => {
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
-                // onClick={formik.handleSignup}
               >
                 Sign Up
               </button>
