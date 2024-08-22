@@ -32,7 +32,7 @@ const SignInForm = () => {
     mutationKey: ["login"],
   });
 
-  // console.log(mutateAsync.AlertMessage);
+  // console.log(mutateAsync(error));
 
   // console.log(mutation);
 
@@ -44,7 +44,7 @@ const SignInForm = () => {
     //! Validation
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       // http request
       mutateAsync(values)
         .then((data) => {
@@ -56,8 +56,7 @@ const SignInForm = () => {
     },
   });
 
-  // console.log(isError.message);
-  // console.log(formik);
+  // console.log({ isPending, isError, error, isSuccess });
 
   return (
     <>
@@ -72,9 +71,11 @@ const SignInForm = () => {
               <AlertMessage type="loading" message="Login you in..." />
             )}
             {isError && (
-              <AlertMessage type="isError" message={isError.message} />
+              <AlertMessage
+                type="error"
+                message={error.response.data.message}
+              />
             )}
-            {error && <AlertMessage type="error" message={error} />}
 
             {isSuccess && (
               <AlertMessage type="success" message="Login Success" />
