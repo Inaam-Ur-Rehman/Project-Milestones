@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import { registerAPI } from "../services/users/userServices";
 import AlertMessage from "../../Templates/Alert/AlertMessage";
+import { useNavigate } from "react-router-dom";
 
 //! Validation
 const validationSchema = Yup.object({
@@ -28,6 +29,7 @@ const SignupForm = () => {
     setShowPassword(!showPassword);
   };
 
+  const navigate = useNavigate();
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -66,6 +68,13 @@ const SignupForm = () => {
         .catch((err) => console.log(err));
     },
   });
+
+  //! Redirect
+  if (isSuccess) {
+    setTimeout(() => {
+      navigate("/login");
+    }, 2000);
+  }
 
   return (
     <>

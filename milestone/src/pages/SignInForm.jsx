@@ -7,6 +7,7 @@ import { loginAPI } from "../services/users/userServices";
 import AlertMessage from "../../Templates/Alert/AlertMessage";
 import { loginAction } from "../redux/slice/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 //! Validation
 const validationSchema = Yup.object({
@@ -22,6 +23,9 @@ const SignInForm = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+  //! Navigate
+  const navigate = useNavigate();
 
   // Dispatch
   const dispatch = useDispatch();
@@ -57,6 +61,11 @@ const SignInForm = () => {
   });
 
   // console.log({ isPending, isError, error, isSuccess });
+
+  //! Redirect
+  if (isSuccess) {
+    navigate("/");
+  }
 
   return (
     <>
